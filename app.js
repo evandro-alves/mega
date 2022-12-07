@@ -27,5 +27,5 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/login', login);
 app.use('/jogos', jogos);
-app.use('/home', index);
+app.use('/', index);
 app.listen(3000);
