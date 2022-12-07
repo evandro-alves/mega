@@ -1,14 +1,14 @@
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 const express = require('express');
 const fetch = require('node-fetch');
-const path = require('path');
+// const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
 const login = require('./routes/login');
 const jogos = require('./routes/jogos');
-const { networkInterfaces } = require('os');
+// const { networkInterfaces } = require('os');
 
 const app = express();
 app.listen(3000);
@@ -25,7 +25,7 @@ app.set('views', './views');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 app.get('/', (req,res, next)=>{    
     let concurso = '';
     if(req.query && req.query.concurso)
