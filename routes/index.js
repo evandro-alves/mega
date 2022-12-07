@@ -1,8 +1,9 @@
+
 const express = require('express');
 const fetch = require('node-fetch');
 const router = express.Router();
 
-router.get('/', (req,res)=>{    
+router.get('/', (req,res, next)=>{    
     let concurso = '';
     if(req.query && req.query.concurso)
         concurso = req.query.concurso;
