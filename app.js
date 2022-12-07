@@ -1,6 +1,6 @@
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 const express = require('express');
-// const path = require('path');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
@@ -11,7 +11,6 @@ const jogos = require('./routes/jogos');
 // const { networkInterfaces } = require('os');
 
 const app = express();
-app.listen(3000);
 
 pool = mysql.createPool({
     host: 'localhost',
@@ -25,9 +24,8 @@ app.set('views', './views');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static('public'));
-app.use('/', index);
+app.use(express.static(path.join(__dirname,'public')));
 app.use('/login', login);
 app.use('/jogos', jogos);
-
-module.exports = app;
+app.use('/', index);
+app.listen(3000);
