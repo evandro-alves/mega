@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname,'public')));
 // app.use('/home', index);
 
 
-router.get('/', (req,res)=>{    
+app.get('/', (req,res)=>{    
     let concurso = '';
     if(req.query && req.query.concurso)
         concurso = req.query.concurso;
@@ -59,13 +59,13 @@ router.get('/', (req,res)=>{
     catch{
     }  
 });
-router.get('/jogos',(req,res,next)=>{
+app.get('/jogos',(req,res,next)=>{
     res.render('jogos');
 });
-router.get('/login',(req,res,next)=>{
+app.get('/login',(req,res,next)=>{
     res.render('login');    
 });
-router.post('/login',(req,res,next)=>{
+app.post('/login',(req,res,next)=>{
     let message = '';
     try{
         res.redirect('/jogos');
