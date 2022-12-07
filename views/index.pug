@@ -1,20 +1,23 @@
-html
-    head
-        title=title
-    body
-        h1=title
-        h2=concurso
-        div
-            a(href='/?concurso='+concursoAnterior)
-                span='Concurso '+ concursoAnterior
-        div
-            if concursoPosterior!=null
-                a(href='/?concurso='+concursoPosterior)
-                    span='Concurso '+ concursoPosterior
-        section
-            div
-                h2=dataApuracao
-                ul
-                    if numeros!=null
-                        each val in numeros
-                            li=val
+extends layout.pug 
+block content
+    div.row
+        div.col-auto
+            h1=title
+        div.col
+            div.btn-group
+                a(href='/?concurso='+concursoAnterior class='btn btn-primary')
+                    i.fas.fa-arrow-left &nbsp
+                    span='Concurso '+ concursoAnterior
+                if concursoPosterior!=null
+                    a(href='/?concurso='+concursoPosterior class='btn btn-primary')
+                        span='Concurso '+ concursoPosterior +' '
+                        i.fas.fa-arrow-right &nbsp
+    h2=concurso
+    section.row
+        div.col
+            h3=dataApuracao
+            ul
+                if numeros!=null
+                    each val in numeros
+                        li=val
+
