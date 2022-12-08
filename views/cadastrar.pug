@@ -1,0 +1,25 @@
+extends layout.pug 
+block content 
+    h2 Novo usuário
+    div.row
+        div.col-6
+            form.mb-3(method="post" action="/login/cadastrar")
+                div(class="form-floating mb-3")
+                    input(type="email" class="form-control" id="floatingInput" name="email" value=email placeholder="name@example.com" required)
+                    label(for="floatingInput") E-mail
+                div(class="form-floating mb-3")
+                    input(type="nome" class="form-control" id="floatingNome" placeholder="Nome" name="nome" value=nome required)
+                    label(for="floatingNome") nome
+                div(class="form-floating mb-3")
+                    input(type="password" class="form-control" id="floatingPassword" placeholder="Senha" name="senha" value=senha required)
+                    label(for="floatingPassword") Senha
+                div     
+                    button(class="btn btn-primary me-2" type="submit") 
+                        i.fas.fa-check &nbsp
+                        span Cadastrar
+                    a(class="btn btn-danger" href="/login") 
+                        i.fas.fa-times &nbsp
+                        span Cancelar
+            if message!=null
+                div.alert.alert-secondary(role="alert")
+                    span=message

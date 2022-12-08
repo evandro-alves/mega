@@ -1,3 +1,27 @@
 extends layout.pug 
 block content 
     h2 Jogos
+    a(href='/jogos/novo' class="btn btn-primary") 
+        i(class="fas fa-plus") &nbsp
+        span Novo Jogos
+    div.row
+        div.col
+            table.table
+                thead
+                    tr
+                        th(scope='col') Concurso
+                        th(scope='col') Data
+                        th(scope='col') Jogadores                       
+                        th(scope='col') Apostas 
+                        th(scope='col') &nbsp
+                tbody 
+                    each jogo in jogos
+                        tr 
+                            td=jogo.concurso
+                            td=jogo.dataCriacao
+                            td=jogo.totalJogadores 
+                            td=jogo.totalApostas     
+                            td
+                                button(class="btn btn-primary btn-detalhar" type="button" role="button")
+                                    i.fas.fa-magnifying-glass-plus &nbsp 
+    script(src='/js/pages/jogos.js')
