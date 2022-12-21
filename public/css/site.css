@@ -1,0 +1,11 @@
+.relative{
+    position:relative;
+}
+.loading-container{
+    background-color: #0000003a;
+}
+.loading{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}

@@ -2,10 +2,10 @@ const model = require('../models/model');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-router.get('/',(req,res,next)=>{
-    res.render('login');    
+router.get('/',(req,res,)=>{
+    return res.render('login',{page:((req.query && req.query.return)?req.query.return:'')});    
 });
-router.post('/',async (req,res,next)=>{
+router.post('/',async (req,res)=>{
     let message = '';    
 	let email = req.body.email;
 	let senha = req.body.senha;
@@ -20,10 +20,10 @@ router.post('/',async (req,res,next)=>{
             req.session.autenticado = true;
             req.session.usuario = rows[0].nome;
             req.session.idUsuario = rows[0].id;
-            if(req.query.return)
-                res.redirect(path.join(__dirname,req.query.return));
+            if(req.query.return && req.query.return.indexOf('/')==0)
+                return res.redirect(req.query.return);
             else
-                res.redirect('/');              
+                return res.redirect('/');              
         },(err)=>{
             throw err;
         });

@@ -13,7 +13,6 @@ const { networkInterfaces } = require('os');
 const app = express();
 app.listen(3000);
 
-
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(session({
@@ -25,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('public'));
-app.get('/', (req,res, next)=>{    
+app.get('/', (req,res)=>{    
     let concurso = '';
     if(req.query && req.query.concurso)
         concurso = req.query.concurso;
@@ -37,9 +36,9 @@ app.get('/', (req,res, next)=>{
         .then((d)=>{
             d.json().then(d=>{            
                 if(d.listaDezenas==null)
-                    res.redirect('/');
+                    return res.redirect('/');
                 else{
-                    res.render('index',{
+                    return res.render('index',{
                         title:'Resultados',
                         concurso:`Concurso ${d.numero}`,
                         concursoAnterior:d.numeroConcursoAnterior,
@@ -60,7 +59,7 @@ app.use('/login', login);
 app.use('/jogos', jogos);
 
 // app.use((req, res, next) => {
-//     res.render('404', {pageTitle: "Page Not Found"});
+//     return res.render('404', {pageTitle: "Page Not Found"});
 // });
 
 

@@ -6,7 +6,7 @@ block content
         span Novo Jogo
     div.row
         div.col
-            table.table
+            table.table.tabela-jogos
                 thead
                     tr
                         th(scope='col') Concurso
@@ -24,24 +24,26 @@ block content
                             td
                                 button(class="btn btn-primary btn-detalhar" type="button" role="button")
                                     i.fas.fa-magnifying-glass-plus &nbsp 
+            div.relative.loading-container
+                div.loading.pt-5.d-none
+                    i.fas.fa-spin.fa-circle-notch.fa-3x
     div.modal#modalJogo
         div.modal-dialog.modal-dialog-centered
             div.modal-content
                 div.modal-header
                     h5.modal-title Novo Jogo 
-                    button(type='button' class='btn-close' data-bs-dismiss='modal')
+                    button(type='button' class='btn-close btn-fechar-modal' data-bs-dismiss='modal')
                 div.modal-body
-                    form#frmNovoConcurso(action='/jogos/novo' method='post')
+                    form#frmNovoConcurso
                         div.mb-2
                             label.form-label(for='txtConcurso') Concurso
-                            input.form-control#txtConcurso(type='number' required)
+                            input.form-control#txtConcurso(type='number' name='concurso' required)
                         div.mb-2.text-center
                             button.btn.btn-success.me-1(type='submit')
                                 i.fas.fa-save &nbsp 
-                                span Adicinonar 
+                                span Adicionar 
                             button.btn.btn-danger(type='button' data-bs-dismiss='modal')
                                 i.fas.fa-times &nbsp 
-                                span Cancelar
-                div.modal-footer.d-none
-                    div.alert#modal &nbsp
+                                span Cancelar                              
+                    div.alert-container
     script(src='/js/pages/jogos.js')

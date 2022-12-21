@@ -3,7 +3,7 @@ block content
     h2 Login
     div.row
         div.col-6
-            form.mb-3(method="post" action="/login")
+            form.mb-3(method="post" action="/login?return="+page)
                 div(class="form-floating mb-3")
                     input(type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com" value=email)
                     label(for="floatingInput") E-mail

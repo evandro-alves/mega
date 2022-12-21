@@ -72,4 +72,18 @@ model.add = async (table, obj)=>{
         });
     });
 };
+model.remove = async (table, id)=>{
+    let sql = mysql.format(`delete from ${table} where id=?`,[id]);
+    return new Promise((res,rej)=>{
+        pool.getConnection((err,conn)=>{
+            if(err) rej(err);
+            else conn.query(sql, (err,rs)=>{
+                if(err)
+                    rej(err);
+                else res(rs.affectedRows);
+                conn.release();
+            });
+        });
+    });
+};
 module.exports = model;
