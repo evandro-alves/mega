@@ -1,8 +1,10 @@
 extends layout.pug 
 block content
+    h1=title
     div.row
-        div.col-auto
-            h1=title
+        div.col-auto       
+            h2 Concurso 
+                span.text-primary=concurso
         div.col
             div.btn-group
                 a(href='/?concurso='+concursoAnterior class='btn btn-primary')
@@ -12,12 +14,13 @@ block content
                     a(href='/?concurso='+concursoPosterior class='btn btn-primary')
                         span='Concurso '+ concursoPosterior +' '
                         i.fas.fa-arrow-right &nbsp
-    h2=concurso
     section.row
         div.col
-            h3=dataApuracao
-            ul
+            h3 Data de Apuração 
+                span.text-primary=dataApuracao
+            div.d-flex
                 if numeros!=null
                     each val in numeros
-                        li=val
+                        div.resultado.border.rounded-circle.ps-2.pe-2.pt-1.pb-1.me-2.bg-primary.text-light=val
+
 

@@ -40,10 +40,10 @@ app.get('/', (req,res)=>{
                 else{
                     return res.render('index',{
                         title:'Resultados',
-                        concurso:`Concurso ${d.numero}`,
+                        concurso:d.numero,
                         concursoAnterior:d.numeroConcursoAnterior,
                         concursoPosterior:d.numeroConcursoProximo,
-                        dataApuracao:`Data Apuracao ${d.dataApuracao}`,
+                        dataApuracao:d.dataApuracao,
                         numeros:d.listaDezenas,
                         autenticado:req.session.autenticado,
                         usuario:req.session.usuario

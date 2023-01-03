@@ -16,18 +16,18 @@ block content
                         th(scope='col') &nbsp
                 tbody 
                     each jogo in jogos
-                        tr 
-                            td=jogo.concurso
-                            td=jogo.dataCriacao
-                            td=jogo.totalJogadores 
-                            td=jogo.totalApostas     
-                            td
+                        tr
+                            td.align-middle=jogo.concurso
+                            td.align-middle=jogo.dataCriacao
+                            td.align-middle=jogo.totalJogadores 
+                            td.align-middle=jogo.totalApostas     
+                            td.align-middle
                                 button(class="btn btn-primary btn-detalhar" type="button" role="button")
                                     i.fas.fa-magnifying-glass-plus &nbsp 
             div.relative.loading-container
                 div.loading.pt-5.d-none
                     i.fas.fa-spin.fa-circle-notch.fa-3x
-    div.modal#modalJogo
+    div.modal#modalJogo.fade
         div.modal-dialog.modal-dialog-centered
             div.modal-content
                 div.modal-header

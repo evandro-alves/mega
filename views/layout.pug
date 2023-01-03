@@ -11,8 +11,8 @@ html(lang="en")
         link(href="/css/regular.css" rel="stylesheet")
         link(href="/css/site.css" rel="stylesheet")
     body
-        div.container
-            header(class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom shadow-sm")
+        div.container.bg-light.vh-100
+            header(class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom shadow ps-3 pe-3 rounded")
                 a(class="navbar-brand" href="/") 
                     i.fas.fa-dice.fa-xl &nbsp
                     span Mega     
@@ -24,16 +24,16 @@ html(lang="en")
                         a(href="/jogos" class="btn btn-primary me-3") 
                             i.fas.fa-dice &nbsp
                             span Jogos
-                        a(href="/" class="btn btn-secondary me-1") 
+                        a(href="/login/perfil" class="btn btn-secondary me-1") 
                             i.fas.fa-gear &nbsp
                             span=usuario
                         a(href="/login/sair" class="btn btn-danger") 
                             i.fas.fa-door-open &nbsp
                             span Sair
                     if !autenticado
-                        a(href="/login/cadastrar" class="btn btn-light me-2") 
+                        a(href="/login/cadastrar" class="btn btn-secondary me-1") 
                             i.fas.fa-user &nbsp
-                            span Cadastrar
+                            span Faça Parte!
                         a(href="/login" class="btn btn-primary me-2") 
                             i.fas.fa-right-to-bracket &nbsp
                             span Entrar

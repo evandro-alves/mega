@@ -86,4 +86,18 @@ model.remove = async (table, id)=>{
         });
     });
 };
+model.update = async (table,id, obj)=>{
+    return new Promise((res,rej)=>{
+        pool.getConnection((err,conn)=>{
+            if(err) rej(err);
+            conn.query(`UPDATE ${table} SET ? where id=${id}`,obj, (err,rs)=>{
+                if(err) rej(err);
+                else {                   
+                    res(obj);
+                }
+                conn.release();
+            });
+        });
+    });
+};
 module.exports = model;

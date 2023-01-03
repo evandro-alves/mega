@@ -1,4 +1,5 @@
 const model = require('../models/model');
+const hasher = require('../models/hasher');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
@@ -12,9 +13,13 @@ router.post('/',async (req,res)=>{
     try{        
         if(!email || !senha)
             throw 'O E-mail e a senha não podem estar vazios.';    
-        await model.query('select * from usuarios where email=? and senha=?',[email,senha])
+        await model.query('select * from usuarios where email=?',[email])
         .then((rows)=>{
             if(!rows || rows.length == 0){
+                throw 'E-mail ou senha inválidos';
+            }
+            let hash = hasher.generate(senha, rows[0].salt);
+            if(hash.hashedpassword!=rows[0].senha){
                 throw 'E-mail ou senha inválidos';
             }
             req.session.autenticado = true;
@@ -53,12 +58,16 @@ router.post('/cadastrar',(req,res,next)=>{
             if(rows && rows.length > 0){
                 throw 'E-mail já cadastrado.';
             }
-            model.add('usuarios',{email:email,nome:nome,senha:senha})
+            let hash = hasher.generate(senha,hasher.generateSalt(12));
+            let senhaHash= hash.hashedpassword;
+            let salt = hash.salt;
+            let novoUsuario ={email:email,nome:nome,senha:senhaHash,salt:salt,dataCriacao:new Date()};
+            model.add('usuarios', novoUsuario)
             .then((usuario)=>{
                 req.session.autenticado = true;
                 req.session.usuario = usuario.nome;
                 req.session.idUsuario = usuario.id;
-                res.redirect('/');
+                return res.redirect('/');
             },(rej)=>{ throw rej;});
         },(err)=>{
             throw err;
@@ -66,6 +75,18 @@ router.post('/cadastrar',(req,res,next)=>{
     }
     catch(ex){
         res.render('cadastrar',{email:email,nome:nome,senha:senha,message:ex});
+    }
+});
+router.get('/perfil',async (req,res)=>{
+    if(!req.session.autenticado)
+        return res.redirect('/login?return=/jogos');
+    try{
+        let usuario = await model.query('select * from usuarios where id=? limit 1',[req.session.idUsuario])
+            .then((rows)=> rows && rows.length>0? rows[0]:null, (ex)=>{throw ex;});
+        if(!usuario) return res.statusCode(404);
+        return res.render('perfil',{usuario:usuario});
+    }catch(ex){
+        return res.redirect('/');
     }
 });
 module.exports = router;

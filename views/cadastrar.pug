@@ -1,8 +1,8 @@
 extends layout.pug 
 block content 
-    h2 Novo usuário
     div.row
-        div.col-6
+        div.col-6.mx-auto
+            h2 Novo usuário
             form.mb-3(method="post" action="/login/cadastrar")
                 div(class="form-floating mb-3")
                     input(type="email" class="form-control" id="floatingInput" name="email" value=email placeholder="name@example.com" required)

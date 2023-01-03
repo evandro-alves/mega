@@ -1,61 +1,86 @@
 extends layout.pug 
 block content 
-    h2='Jogo Concurso '+ jogo.Concurso
+    h2.mb-4.mt-4='Jogo Concurso '+ jogo.Concurso
+        if jogo.temResultado
+            small.badge.rounded-pill.ms-2.fs-6.bg-success='Realizado em '+jogo.dataApuracao 
+        else
+            small.badge.rounded-pill.ms-2.fs-6.bg-danger Não Realizado
+    if jogo.resultado!=null 
+        div.row.mb-4.resultados
+            div.col-6
+                h3 Resultado sorteado
+                div.d-flex
+                    each resultado in jogo.resultado 
+                        div.resultado.border.rounded-circle.ps-2.pe-2.pt-1.pb-1.me-2.bg-primary.text-light=resultado
     if message!=null    
-        div.alert.alert-danger=message 
+        div.mb-4.alert.alert-danger=message 
     div.row
         div.col
-            form(action='/jogos/'+jogo.Id+'/apostas' method='post')                
+            form(method='post')                
                 div.mb-2
                     h3 Jogadores
                         small.ms-1
-                            button(class='btn btn-primary mb-2'  type='button')
+                            button(class='btn btn-primary mb-2' data-bs-toggle="modal" data-bs-target="#modalJogador" type='button')
                                 i.fas.fa-plus &nbsp
-                                span Jogador
-                    if jogo.jogadores!=null
-                        each jogador in jogo.jogadores
-                            div.row.mb-1.jogador
-                                div.col-6
-                                    span Nome
-                        each jogador, idx in jogo.jogadores
-                            div.row.pb-2.border-bottom.apostas
-                                div.row
-                                    div.col-6                                
-                                        input(class='form-control' type='text' name='jogadores['+idx+'].nome' id='jogadores['+idx+'].nome' value=jogador.nome required)                              
-                                    div.col-2
-                                        button(class='btn btn-primary mb-2'  type='button')
-                                            i.fas.fa-plus &nbsp
-                                            span Aposta
-                                div.row
-                                    div.col.ms-2.me-2
-                                        div.mb-1 Apostas
-                                            if jogador.apostas.lenght == 0
-                                                div.d-flex.justify-content-around
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[0]' id='jogadores['+idx+'].apostas[0].numeros[0]' required value=jogador.apostas[0].numeros[0])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[1]' id='jogadores['+idx+'].apostas[0].numeros[1]' required value=jogador.apostas[0].numeros[1])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[2]' id='jogadores['+idx+'].apostas[0].numeros[2]' required value=jogador.apostas[0].numeros[2])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[3]' id='jogadores['+idx+'].apostas[0].numeros[3]' required value=jogador.apostas[0].numeros[3])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[4]' id='jogadores['+idx+'].apostas[0].numeros[4]' required value=jogador.apostas[0].numeros[4])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[5]' id='jogadores['+idx+'].apostas[0].numeros[5]' required value=jogador.apostas[0].numeros[5])                    
-                                                    button(class='btn btn-danger' type='button')
-                                                        i.fas.fa-trash
-                                            each aposta in jogador.apostas
-                                                div.d-flex.justify-content-around
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[0]' id='jogadores['+idx+'].apostas[0].numeros[0]' required value=aposta.numeros[0])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[1]' id='jogadores['+idx+'].apostas[0].numeros[1]' required value=aposta.numeros[1])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[2]' id='jogadores['+idx+'].apostas[0].numeros[2]' required value=aposta.numeros[2])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[3]' id='jogadores['+idx+'].apostas[0].numeros[3]' required value=aposta.numeros[3])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[4]' id='jogadores['+idx+'].apostas[0].numeros[4]' required value=aposta.numeros[4])
-                                                    input(class='form-control me-1' type='number' min='1' max='60' name='jogadores['+idx+'].apostas[0].numeros[5]' id='jogadores['+idx+'].apostas[0].numeros[5]' required value=aposta.numeros[5])                    
-                                                    button(class='btn btn-danger' type='button')
-                                                        i.fas.fa-trash
-                div.buttons.mb-2
+                                span Jogador 
+                div.row.p-4.shadow-sm#jogadores                        
+                div.buttons.mb-2.mt-3
                     a(class="btn btn-secondary me-1" href='/jogos')
                         i.fas.fa-chevron-left &nbsp 
-                        span Voltar 
-                    button(class="btn btn-success me-1")
-                        i.fas.fa-save &nbsp 
-                        span Salvar 
+                        span Voltar                     
                     button(class="btn btn-danger btn-excluir" formaction='/jogos/'+jogo.Id+'/excluir' onclick='return confirm("Deseja realmente excluir este jogo?")')
                         i.fas.fa-times &nbsp 
                         span Excluir
+    div.modal#modalJogador.fade
+        div.modal-dialog.modal-dialog-centered
+            div.modal-content
+                div.modal-header
+                    h5.modal-title Jogador 
+                    button(type='button' class='btn-close btn-fechar-modal' data-bs-dismiss='modal')
+                div.modal-body
+                    form#frmNovoJogador
+                        input#jogoId(type='hidden' value=jogo.Id name='jogoId')
+                        input#jogadorId(type='hidden' name='jogadorId')
+                        div.mb-2
+                            label.form-label(for='nomeJogador') Nome
+                            input.form-control#nomeJogador(type='text' name='nomeJogador' required)
+                        div.mb-2.text-center
+                            button.btn.btn-success.me-1(type='submit')
+                                i.fas.fa-save &nbsp 
+                                span Adicionar 
+                            button.btn.btn-danger(type='button' data-bs-dismiss='modal')
+                                i.fas.fa-times &nbsp 
+                                span Cancelar                              
+                    div.alert-container
+    div.modal#modalAposta.fade
+        div.modal-dialog.modal-dialog-centered
+            div.modal-content
+                div.modal-header
+                    h5.modal-title Aposta 
+                    button(type='button' class='btn-close btn-fechar-modal' data-bs-dismiss='modal')
+                div.modal-body
+                    form#frmAposta
+                        input#apostaId(type='hidden' name='apostaId')
+                        input#jogoId(type='hidden' value=jogo.Id name='jogoId')
+                        input#jogadorId(type='hidden' name='jogadorId')
+                        div.mb-2
+                            label.form-label(for='nomeJogador') Nome
+                            input.form-control#nomeJogador(type='text' name='nomeJogador' readonly)
+                        div.mb-2                        
+                            label.form-label Números
+                            div.d-flex
+                                input.form-control.numeros(type='number' name='numeros')
+                                input.form-control.numeros(type='number' name='numeros')
+                                input.form-control.numeros(type='number' name='numeros')
+                                input.form-control.numeros(type='number' name='numeros')
+                                input.form-control.numeros(type='number' name='numeros')
+                                input.form-control.numeros(type='number' name='numeros')
+                        div.mb-2.text-center
+                            button.btn.btn-success.me-1(type='submit')
+                                i.fas.fa-save &nbsp 
+                                span Adicionar 
+                            button.btn.btn-danger(type='button' data-bs-dismiss='modal')
+                                i.fas.fa-times &nbsp 
+                                span Cancelar                              
+                    div.alert-container
+    script(src='/js/pages/jogos.js')

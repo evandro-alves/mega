@@ -1,8 +1,8 @@
 extends layout.pug 
 block content 
-    h2 Login
     div.row
-        div.col-6
+        div.col-6.mx-auto
+            h2 Login
             form.mb-3(method="post" action="/login?return="+page)
                 div(class="form-floating mb-3")
                     input(type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com" value=email)
@@ -10,8 +10,13 @@ block content
                 div(class="form-floating mb-3")
                     input(type="password" class="form-control" id="floatingPassword" name="senha" placeholder="Password" value=senha)
                     label(for="floatingPassword") Senha
-                div     
-                    button(class="btn btn-primary" type="submit") Entrar
+                div.buttons     
+                    button(class="btn btn-primary me-2" type="submit") 
+                        i.fas.fa-person-walking-arrow-right
+                        span=' Entrar'
+                    button(class="btn btn-secondary" type="submit")
+                        i.fas.fa-chevron-left
+                        span=' Voltar'
             if message!=null
                 div.alert.alert-secondary(role="alert")
                     span=message
