@@ -8,7 +8,6 @@ left join
 	(select jo.jogoid, jo.id, count(a.id) as totalApostas
 		from jogadores jo
 		left join apostas a on jo.id=a.JogadorId
-		where jo.jogoid=5
 		group by jo.jogoid,jo.id) joa on j.id=joa.jogoid
 where j.usuarioId=?
 group by j.id, j.concurso, j.usuarioid, j.datacriacao
@@ -152,7 +151,7 @@ router.post('/:jogoId(\\d+)/jogador/salvar',async (req,res)=>{
             await model.update('jogadores',req.body.Id,jogador)
             .then((jogador)=>{
                 return res.status(202).json({data:[jogador]});
-            },(err)=>{throw 'Não foi possível adicionar o Jogador'; });            
+            },(err)=>{throw err; });            
         }else{
             await model.add('jogadores',jogador)
             .then((jogador)=>{
